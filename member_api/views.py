@@ -8,6 +8,45 @@ from member_api.serializer import MemberSerializer
 from TASBackend.models import Member
 from mongoengine.errors import ValidationError
 
+
+def storeNutrition(request):
+    data = JSONParser().parse(request)
+    totalcal = data.get("Calories")
+    totalFat = data.get("Total Fat")
+    cholesterol = data.get("Cholesterol")
+    sodium = data.get("Sodium")
+    totalCarbs = data.get("Total Carbs")
+    protein = data.get("Protein")
+
+    if totalcal is None:
+        msg = {'message': 'body parameter "Calories" should be given' }
+        return JsonResponse(msg, status= status.HTTP_400_BAD_REQUEST)
+    if totalFat is None:
+        totalFat = 0
+    if cholesterol is None:
+        cholesterol = 0
+    if sodium is None:
+        sodium = 0
+    if totalCarbs is None:
+        totalCarbs = 0
+    if protein is None:
+        protein = 0
+    
+    # serializer makes sure input data is changed to readable type
+    serializer = MemberSerializer(data = { 
+        'Calories': totalcal,
+        'Total Fat': totalFat,
+        'Cholesterol': cholesterol,
+        'Sodium': sodium,
+        'Total Carbs' : totalCarbs,
+        'Protein': protein,
+    }) 
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse(serializer.data, status = status.HTTP_200_OK)
+    else:
+        return JsonResponse(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
 @api_view(['POST'])
 def register(request):
     data = JSONParser().parse(request)
@@ -114,6 +153,7 @@ def update_member(request, user_id):
         user = Member.objects.get(id = user_id)
     except Member.DoesNotExist:
         return JsonResponse(
+            
             {'message': 'user does not exist.'},
             status = status.status.HTTP_400_NOT_FOUND
         )

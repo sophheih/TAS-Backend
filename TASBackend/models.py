@@ -5,3 +5,4 @@ class Member (mongoengine.Document):
     password = mongoengine.StringField()
     weight = mongoengine.IntField()
     height = mongoengine.IntField()
+    

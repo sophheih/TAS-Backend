@@ -37,12 +37,12 @@ def storeNutrition(request):
     
     # serializer makes sure input data is changed to readable type
     serializer = DishSerializer(data = { 
-        'Name': dishName,
+        'Name':dishName,
         'Calories': totalcal,
-        'Total Fat': totalFat,
+        'Total_Fat': totalFat,
         'Cholesterol': cholesterol,
         'Sodium': sodium,
-        'Total Carbs' : totalCarbs,
+        'Total_Carbs' : totalCarbs,
         'Protein': protein,
     }) 
     if serializer.is_valid():

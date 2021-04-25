@@ -8,10 +8,10 @@ class Member (mongoengine.Document):
     # add dish model
 
 class Dish (mongoengine.Document):
-    dishName = mongoengine.StringField()
-    totalcal = mongoengine.IntField()
-    totalfat = mongoengine.IntField()    
-    cholesterol = mongoengine.IntField() 
-    sodium = mongoengine.IntField()
-    totalCarbs = mongoengine.IntField()
-    protein = mongoengine.IntField()
+    Name = mongoengine.StringField() # name has to be the same as the string in serializer
+    Calories = mongoengine.IntField()
+    Total_Fat = mongoengine.IntField()    
+    Cholesterol = mongoengine.IntField() 
+    Sodium = mongoengine.IntField()
+    Total_Carbs = mongoengine.IntField()
+    Protein = mongoengine.IntField()

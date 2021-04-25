@@ -20,4 +20,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('member/', include('member_api.urls')),
+    path('dish/', include('dish_api.urls')),
 ]

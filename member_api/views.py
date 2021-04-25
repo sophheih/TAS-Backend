@@ -16,7 +16,7 @@ def storeNutrition(request):
     cholesterol = data.get("Cholesterol")
     sodium = data.get("Sodium")
     totalCarbs = data.get("Total Carbs")
-    protein = data.get("Protein")
+    protein = data.get("Protein")  
 
     if totalcal is None:
         msg = {'message': 'body parameter "Calories" should be given' }

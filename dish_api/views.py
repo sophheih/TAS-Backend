@@ -5,7 +5,7 @@ from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
 from dish_api.serializer import DishSerializer
-from TASBackend.models import Dish
+from TASBackend.models import dish
 from mongoengine.errors import ValidationError
 
 @api_view(['POST'])

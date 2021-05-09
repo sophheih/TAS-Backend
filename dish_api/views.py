@@ -53,17 +53,17 @@ def storeNutrition(request):
     
 
 @api_view(['PUT', 'GET', 'DELETE'])
-def dish_id(request, user_id):
+def dish_id(request, dish_id):
     if request.method == 'GET':
-        return get_dish(request, user_id)
+        return get_dish(request, dish_id)
     elif request.method == 'PUT':
-        return update_dish(request, user_id)
+        return update_dish(request, dish_id)
     elif request.method == 'DELETE':
-        return delete_dish(request, user_id)
+        return delete_dish(request, dish_id)
 
-def get_dish(request, user_id):   
+def get_dish(request, dish_id):   
     try: 
-        user = dish.objects.get(id = user_id)
+        user = dish.objects.get(id = dish_id)
     except dish.DoesNotExist:
         return JsonResponse(
             {'message': 'dish is not in database.'},
@@ -78,10 +78,10 @@ def get_dish(request, user_id):
     serializer = DishSerializer(user)
     return JsonResponse(serializer.data, status = status.HTTP_200_OK, safe = False )
 
-def update_dish(request, user_id):   
+def update_dish(request, dish_id):   
     data = JSONParser().parse(request)
     try: 
-        user = dish.objects.get(id = user_id)
+        user = dish.objects.get(id = dish_id)
     except dish.DoesNotExist:
         return JsonResponse(
             
@@ -101,9 +101,9 @@ def update_dish(request, user_id):
     else:
         return JsonResponse(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-def delete_dish(request, user_id):
+def delete_dish(request, dish_id):
     try: 
-        user = dish.objects.get(id = user_id)
+        user = dish.objects.get(id = dish_id)
     except dish.DoesNotExist:
         return JsonResponse(
             {'message': 'dish does not exist.'},

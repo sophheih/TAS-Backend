@@ -1,7 +1,7 @@
 from rest_framework_mongoengine import serializers
-from TASBackend.models import Dish
+from TASBackend.models import dish
 
 class DishSerializer (serializers.DocumentSerializer):
     class Meta:
-        model = Dish
+        model = dish
         fields = '__all__'

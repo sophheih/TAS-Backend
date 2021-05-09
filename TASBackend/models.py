@@ -7,7 +7,7 @@ class Member (mongoengine.Document):
     height = mongoengine.IntField()
     # add dish model
 
-class Dish (mongoengine.Document):
+class dish (mongoengine.Document):
     Name = mongoengine.StringField() # name has to be the same as the string in serializer
     Calories = mongoengine.IntField()
     Total_Fat = mongoengine.IntField()    

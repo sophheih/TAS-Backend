@@ -8,6 +8,8 @@ from dish_api.serializer import DishSerializer
 from TASBackend.models import dish
 from mongoengine.errors import ValidationError
 
+
+
 @api_view(['POST'])
 def storeNutrition(request):
     data = JSONParser().parse(request)
@@ -18,6 +20,8 @@ def storeNutrition(request):
     sodium = data.get("Sodium")
     totalCarbs = data.get("Total Carbs")
     protein = data.get("Protein")
+    index = data.get("Index")
+    timestamp = data.get("Timestamp")
     if dishName is None:
         msg = {'message': 'body parameter "Name" should be given' }
         return JsonResponse(msg, status= status.HTTP_400_BAD_REQUEST)
@@ -44,6 +48,8 @@ def storeNutrition(request):
         'Sodium': sodium,
         'Total_Carbs' : totalCarbs,
         'Protein': protein,
+        'Index': index,
+        'Timestamp': timestamp,
     }) 
     if serializer.is_valid():
         serializer.save()
@@ -63,7 +69,7 @@ def dish_id(request, dish_id):
 
 def get_dish(request, dish_id):   
     try: 
-        user = dish.objects.get(id = dish_id)
+        dish = dish.objects.get(id = dish_id)
     except dish.DoesNotExist:
         return JsonResponse(
             {'message': 'dish is not in database.'},
@@ -75,13 +81,40 @@ def get_dish(request, dish_id):
             status = status.HTTP_404_NOT_FOUND
         )
 
-    serializer = DishSerializer(user)
+    serializer = DishSerializer(dish)
     return JsonResponse(serializer.data, status = status.HTTP_200_OK, safe = False )
+@api_view(['GET'])
+def input_filtDish(request, index, timestamp):
+
+    dish_filter = {}
+    if index != '':
+        dish_filter['index'] = index
+    if timestamp != '':
+    
+        dish_filter["timestamp"] = {'$gte': timestamp, '$lte': timestamp+604800} # seconds per week
+
+    dishes = dish.objects(raw = dish_filter)
+    dish_serializer = DishSerializer(dishes, many=True)
+    return JsonResponse(dish_serializer.data, safe=False)
+
+# def get_filteredDish(request, dishName, index, timestamp):
+#     data = JSONParser().parse(request)
+#     try: 
+#         dishesInCaf = dish.objects.filter(id = index)
+#         print(dishesInCaf)
+#         dish = dishesInCaf.objects.get(Name = dishName)
+#     except dish.DoesNotExist:
+#         return JsonResponse(
+            
+#             {'message': 'dish does not exist.'},
+#             status = status.status.HTTP_400_NOT_FOUND
+#         )
+        
 
 def update_dish(request, dish_id):   
     data = JSONParser().parse(request)
     try: 
-        user = dish.objects.get(id = dish_id)
+        dish = dish.objects.get(id = dish_id)
     except dish.DoesNotExist:
         return JsonResponse(
             
@@ -93,7 +126,7 @@ def update_dish(request, dish_id):
             {'message': 'dish does not exist'},
             status = status.HTTP_404_NOT_FOUND
         )
-    serializer = DishSerializer(user, data = data) # overrides the previous data
+    serializer = DishSerializer(dish, data = data) # overrides the previous data
 
     if serializer.is_valid():
         serializer.save()
@@ -103,7 +136,7 @@ def update_dish(request, dish_id):
 
 def delete_dish(request, dish_id):
     try: 
-        user = dish.objects.get(id = dish_id)
+        dish = dish.objects.get(id = dish_id)
     except dish.DoesNotExist:
         return JsonResponse(
             {'message': 'dish does not exist.'},
@@ -115,5 +148,5 @@ def delete_dish(request, dish_id):
             status = status.HTTP_404_NOT_FOUND
         )
 
-    user.delete()
-    return JsonResponse({'message': 'User deleted successfully'}, status = status.HTTP_200_OK)
+    dish.delete()
+    return JsonResponse({'message': 'dish deleted successfully'}, status = status.HTTP_200_OK)

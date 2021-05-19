@@ -5,6 +5,8 @@ class Member (mongoengine.Document):
     password = mongoengine.StringField()
     weight = mongoengine.IntField()
     height = mongoengine.IntField()
+    timestamp = mongoengine.IntField()
+    # data = mongoengine.DictField()
     # add dish model
 
 class dish (mongoengine.Document):
@@ -15,3 +17,5 @@ class dish (mongoengine.Document):
     Sodium = mongoengine.IntField()
     Total_Carbs = mongoengine.IntField()
     Protein = mongoengine.IntField()
+    Index = mongoengine.IntField()
+    Timestamp = mongoengine.IntField()

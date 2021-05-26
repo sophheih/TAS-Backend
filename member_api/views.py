@@ -8,7 +8,7 @@ from member_api.serializer import MemberSerializer
 from TASBackend.models import Member
 from mongoengine.errors import ValidationError
 
-
+@api_view(['POST'])
 def storeNutrition(request):
     data = JSONParser().parse(request)
     totalcal = data.get("Calories")

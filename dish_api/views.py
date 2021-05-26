@@ -22,6 +22,7 @@ def storeNutrition(request):
     protein = data.get("Protein")
     index = data.get("Index")
     timestamp = data.get("Timestamp")
+    
     if dishName is None:
         msg = {'message': 'body parameter "Name" should be given' }
         return JsonResponse(msg, status= status.HTTP_400_BAD_REQUEST)
@@ -88,12 +89,13 @@ def input_filtDish(request, index, timestamp):
 
     dish_filter = {}
     if index != '':
-        dish_filter['index'] = index
+
+        dish_filter['Index'] = int(index)
     if timestamp != '':
     
-        dish_filter["timestamp"] = {'$gte': timestamp, '$lte': timestamp+604800} # seconds per week
+        dish_filter["Timestamp"] = {'$gte': int(timestamp), '$lte': int(timestamp)+604800} # seconds per week
 
-    dishes = dish.objects(raw = dish_filter)
+    dishes = dish.objects(__raw__ = dish_filter)
     dish_serializer = DishSerializer(dishes, many=True)
     return JsonResponse(dish_serializer.data, safe=False)
 

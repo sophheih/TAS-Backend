@@ -19,3 +19,8 @@ class dish (mongoengine.Document):
     Protein = mongoengine.IntField()
     Index = mongoengine.IntField()
     Timestamp = mongoengine.IntField()
+
+class data(mongoengine.Document): # member's daily nutrition data
+    Member_id = mongoengine.StringField()
+    Timestamp = mongoengine.IntField()
+    Data = mongoengine.DictField()

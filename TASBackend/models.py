@@ -1,4 +1,5 @@
 import mongoengine
+from mongoengine.fields import StringField
 
 class Member (mongoengine.Document):
     account = mongoengine.StringField()
@@ -12,7 +13,7 @@ class Member (mongoengine.Document):
 class dish (mongoengine.Document):
     Name = mongoengine.StringField() # name has to be the same as the string in serializer
     Calories = mongoengine.IntField()
-    Total_Fat = mongoengine.IntField()    
+    Total_Fat = mongoengine.FloatField()    
     Cholesterol = mongoengine.IntField() 
     Sodium = mongoengine.IntField()
     Total_Carbs = mongoengine.IntField()
@@ -24,3 +25,19 @@ class data(mongoengine.Document): # member's daily nutrition data
     Member_id = mongoengine.StringField()
     Timestamp = mongoengine.IntField()
     Data = mongoengine.DictField()
+
+class dailyMenu(mongoengine.Document):
+    Date = mongoengine.DateTimeField()
+    RestName = mongoengine.StringField()
+    Main = mongoengine.ListField(StringField())
+    Side = mongoengine.ListField(StringField())
+    Fruit = mongoengine.ListField(StringField())
+
+class constantMenu(mongoengine.Document):
+    Date = mongoengine.DateTimeField()
+    RestName = mongoengine.StringField()
+    Menu = mongoengine.ListField(ListField(StringField())) # how to make this work?
+    
+
+
+

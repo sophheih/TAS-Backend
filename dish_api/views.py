@@ -68,9 +68,11 @@ def dish_id(request, dish_id):
     elif request.method == 'DELETE':
         return delete_dish(request, dish_id)
 
-def get_dish(request, dish_id):   
+def get_dish(request):   
     try: 
-        dish = dish.objects.get(id = dish_id)
+        dish_id = request.GET.get('id', None)
+        if dish_id is not None:
+            d = dish.objects.get(id = dish_id) 
     except dish.DoesNotExist:
         return JsonResponse(
             {'message': 'dish is not in database.'},
@@ -81,9 +83,23 @@ def get_dish(request, dish_id):
             {'message': 'dish does not exist'},
             status = status.HTTP_404_NOT_FOUND
         )
-
-    serializer = DishSerializer(dish)
+    serializer = DishSerializer(d)
     return JsonResponse(serializer.data, status = status.HTTP_200_OK, safe = False )
+#     try: 
+#         dish = dish.objects.get(id = dish_id)
+#     except dish.DoesNotExist:
+#         return JsonResponse(
+#             {'message': 'dish is not in database.'},
+#             status = status.status.HTTP_400_NOT_FOUND
+#         )
+#     except ValidationError:
+#         return JsonResponse(
+#             {'message': 'dish does not exist'},
+#             status = status.HTTP_404_NOT_FOUND
+#         )
+
+#     serializer = DishSerializer(dish)
+#     return JsonResponse(serializer.data, status = status.HTTP_200_OK, safe = False )
 @api_view(['GET'])
 def input_filtDish(request, index, timestamp):
 

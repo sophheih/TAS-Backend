@@ -57,7 +57,7 @@ def add_member(request):
             'Data': curMember.Data, 
             
         }) 
-
+        
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status = status.HTTP_200_OK)

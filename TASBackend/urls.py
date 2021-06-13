@@ -15,11 +15,36 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from apscheduler.schedulers.blocking import BlockingScheduler
+from crawler_api import crawler
+
+from apscheduler.triggers.combining import OrTrigger
+from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.interval import IntervalTrigger
+from apscheduler.schedulers.background import BackgroundScheduler
+sched = BlockingScheduler() 
+
+# def test():
+#     print("testing...")
+
+# @sched.scheduled_job('interval', seconds=60) 
+# def mytask():  
+#     print("Start crawlering......")
+#     crawler.crawler()
+
+def job():
+    print("Start Crawling.....")
+    # crawler.crawler()
 
 
-
+scheduler = BackgroundScheduler()
+scheduler.add_job(job, 'interval', days = 0, hours = 0, minutes = 0, seconds = 10)
+scheduler.start()
+# sched.start()
+# crawler.crawler()
 urlpatterns = [
     path('member/', include('member_api.urls')),
     path('dish/', include('dish_api.urls')),
-    path('nutritioninfo/', include('data_api.urls'))
+    path('nutritioninfo/', include('data_api.urls')),
+    path('dailyMenu/', include('crawler_api.urls'))
 ]

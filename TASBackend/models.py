@@ -7,6 +7,7 @@ class Member (mongoengine.Document):
     weight = mongoengine.IntField()
     height = mongoengine.IntField()
     timestamp = mongoengine.IntField()
+    
     # data = mongoengine.DictField()
     # add dish model
 
@@ -24,7 +25,12 @@ class dish (mongoengine.Document):
 class data(mongoengine.Document): # member's daily nutrition data
     Member_id = mongoengine.StringField()
     Timestamp = mongoengine.IntField()
-    Data = mongoengine.DictField()
+    Calories = mongoengine.IntField()
+    Total_Fat = mongoengine.FloatField()    
+    Cholesterol = mongoengine.IntField() 
+    Sodium = mongoengine.IntField()
+    Total_Carbs = mongoengine.IntField()
+    Protein = mongoengine.IntField()
 
 class dailyMenu(mongoengine.Document):
     Date = mongoengine.DateTimeField()
@@ -34,10 +40,17 @@ class dailyMenu(mongoengine.Document):
     Fruit = mongoengine.ListField(StringField())
 
 class constantMenu(mongoengine.Document):
-    Date = mongoengine.DateTimeField()
-    RestName = mongoengine.StringField()
-    Menu = mongoengine.ListField(ListField(StringField())) # how to make this work?
     
+    dailyCarbs = mongoengine.ListField(StringField())
+    drinks = mongoengine.ListField(StringField())
+    saladBar = mongoengine.ListField(StringField())
+    pizzaBar = mongoengine.ListField(StringField())
+    snackBarPastries = mongoengine.ListField(StringField())
+    snackBarCookies = mongoengine.ListField(StringField())
+    snackBarOther = mongoengine.ListField(StringField())
+    snackBarDesserts = mongoengine.ListField(StringField())
+    snackBarPies = mongoengine.ListField(StringField())
+    snackBarMisc = mongoengine.ListField(StringField())
 
 
 

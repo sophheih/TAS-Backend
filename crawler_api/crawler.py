@@ -16,7 +16,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from crawler_api.serializer import MenuSerializer
-from dish_api.serializer import DishSerializer
+from crawler_api.serializer import DishSerializer
 from TASBackend.models import dailyMenu
 from TASBackend.models import dish
 from mongoengine.errors import ValidationError

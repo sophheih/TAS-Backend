@@ -46,5 +46,6 @@ urlpatterns = [
     path('member/', include('member_api.urls')),
     path('dish/', include('dish_api.urls')),
     path('nutritioninfo/', include('data_api.urls')),
-    path('dailyMenu/', include('crawler_api.urls'))
+    path('dailyMenu/', include('crawler_api.urls')),
+    path('otherRest/', include('otherRest_api.urls'))
 ]

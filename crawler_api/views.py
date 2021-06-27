@@ -6,8 +6,8 @@ from django.http.response import JsonResponse
 
 from crawler_api.serializer import MenuSerializer
 from TASBackend.models import dailyMenu
-from mongoengine.errors import ValidationError
 
+from mongoengine.errors import ValidationError
 
 
 @api_view(['POST'])
@@ -60,18 +60,16 @@ def storeDailyMenu(request):
 #     elif request.method == 'DELETE':
 #         return delete_dish(request, menu_id)
 @api_view(['GET'])
+def menu_id(request, date):
+    if request.method == 'GET':
+        return get_Menu(request, date)
+    
 
-def get_Menu(request):   
+
+def get_Menu(request,date):   
     try: 
-        date = request.GET.get('date', None)
-        if date is not None:
-            menus = dailyMenu.objects.get(Date = date)
+        menus = dailyMenu.objects.get(Date = date)
         
-        else:
-            return JsonResponse(
-                {'message': 'date does not exist'},
-                status = status.HTTP_404_NOT_FOUND
-            )
     except dailyMenu.DoesNotExist:
         return JsonResponse(
             {'message': 'menu is not in database.'},

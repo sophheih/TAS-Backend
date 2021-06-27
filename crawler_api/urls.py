@@ -2,9 +2,7 @@ from django.urls import path
 from crawler_api import views
 urlpatterns = [
     path('new', views.storeDailyMenu),
-    path('get', views.get_Menu),
-    path('update', views.update_menu),
-    
+    path('get/<slug:timestamp>', views.menu_id),
     # path('input/<slug:index>', views.input_filtDish)
 
     

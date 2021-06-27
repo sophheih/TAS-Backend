@@ -19,8 +19,9 @@ def storeNutrition(request):
     cholesterol = data.get("Cholesterol")
     sodium = data.get("Sodium")
     totalCarbs = data.get("Total Carbs")
+
     protein = data.get("Protein")
-    index = data.get("Index")
+    index = data.get("Index") 
     timestamp = data.get("Timestamp")
     
     if dishName is None:
@@ -68,22 +69,9 @@ def dish_id(request, dish_id):
     elif request.method == 'DELETE':
         return delete_dish(request, dish_id)
 
-def get_dish(request):   
-    try: 
-        dish_id = request.GET.get('id', None)
-        if dish_id is not None:
-            d = dish.objects.get(id = dish_id) 
-    except dish.DoesNotExist:
-        return JsonResponse(
-            {'message': 'dish is not in database.'},
-            status = status.status.HTTP_400_NOT_FOUND
-        )
-    except ValidationError:
-        return JsonResponse(
-            {'message': 'dish does not exist'},
-            status = status.HTTP_404_NOT_FOUND
-        )
-    serializer = DishSerializer(d)
+def get_dish(request, dish_id):   
+    
+    serializer = DishSerializer()
     return JsonResponse(serializer.data, status = status.HTTP_200_OK, safe = False )
 #     try: 
 #         dish = dish.objects.get(id = dish_id)
@@ -139,14 +127,17 @@ def update_dish(request, dish_id):
             {'message': 'dish does not exist.'},
             status = status.status.HTTP_400_NOT_FOUND
         )
+
     except ValidationError:
         return JsonResponse(
             {'message': 'dish does not exist'},
             status = status.HTTP_404_NOT_FOUND
+            
         )
     serializer = DishSerializer(dish, data = data) # overrides the previous data
 
     if serializer.is_valid():
+        
         serializer.save()
         return JsonResponse(serializer.data, status = status.HTTP_200_OK)
     else:
@@ -168,3 +159,4 @@ def delete_dish(request, dish_id):
 
     dish.delete()
     return JsonResponse({'message': 'dish deleted successfully'}, status = status.HTTP_200_OK)
+

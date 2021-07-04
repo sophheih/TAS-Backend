@@ -40,12 +40,12 @@ class dailyMenu(mongoengine.Document):
     Fruit = mongoengine.ListField(StringField())
 
 class constantMenu(mongoengine.Document):
-    
+    RestName = mongoengine.StringField()
     dailyCarbs = mongoengine.ListField(StringField())
     drinks = mongoengine.ListField(StringField())
     saladBar = mongoengine.ListField(StringField())
     pizzaBar = mongoengine.ListField(StringField())
-    snackBarPastries = mongoengine.ListField(StringField())
+    snackBarPastries = mongoengine.ListField(StringField()) # different names need to be combined, so can't really make each class 1 restaurant
     snackBarCookies = mongoengine.ListField(StringField())
     snackBarOther = mongoengine.ListField(StringField())
     snackBarDesserts = mongoengine.ListField(StringField())

@@ -52,7 +52,7 @@ def storeConstMenu(request):
 #         return delete_dish(request, menu_id)
 @api_view(['GET'])
 
-def get_Menu(request):   
+def get_Menu(request, restName):   
     '''!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'''
     try:     
         restName = request.GET.get('restName', None)

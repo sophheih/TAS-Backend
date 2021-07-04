@@ -66,7 +66,7 @@ def menu_id(request, date):
     
 
 
-def get_Menu(request,date):   
+def get_Menu(request, date):   
     try: 
         menus = dailyMenu.objects.get(Date = date)
         

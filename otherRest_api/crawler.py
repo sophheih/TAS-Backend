@@ -38,8 +38,8 @@ def saveDish(dishName, totalcal, totalFat, cholesterol, sodium, totalCarbs, prot
     print("-------> dish name: {}, _id; {}".format(dishName, _id))
 
     if _id:
+        print("ALREADY EXISTS")
         return str(_id)
-
     if dishName is None:
         return False
     if totalcal is None:
@@ -70,11 +70,16 @@ def saveDish(dishName, totalcal, totalFat, cholesterol, sodium, totalCarbs, prot
         'Index': int(index),
         # 'Timestamp': int(timestamp),
     }) 
-    if serializer.is_valid():
-        serializer.save()
     
+    if serializer.is_valid():
+        print("save successfully!!")
+        serializer.save()
+    else: 
+        print("save unsuccessful")
+        
     __id = checkDishExisted(dishName)
     while __id is False:
+        print(str(dishName) + 'flase!!!')
         __id = checkDishExisted(dishName)
     print("xxxx> dish name: {}, __id; {}".format(dishName, __id))
 
@@ -83,7 +88,7 @@ def saveDish(dishName, totalcal, totalFat, cholesterol, sodium, totalCarbs, prot
 
 def checkMenuExisted(name):
     try:
-        menu = constantMenu.objects.get(RestName = name)
+        menu = constantMenu.objects.get()
     except constantMenu.DoesNotExist:
         return False
     except ValidationError:
@@ -93,49 +98,35 @@ def checkMenuExisted(name):
     
     return True
 def saveConstMenu(dailyCarbs, drinks, saladBar, pizzaBar, snackBarPastries, snackBarCookies, snackBarOther, snackBarDesserts, snackBarPies, snackBarMisc):
-    if checkMenuExisted(dailyCarbs) is False:
-        return False
-    if checkMenuExisted(drinks) is False:
-        return False
-    if checkMenuExisted(saladBar) is False:
-        return False
-    if checkMenuExisted(pizzaBar) is False:
-        return False
-    if checkMenuExisted(snackBarPastries) is False:
-        return False
-    if checkMenuExisted(snackBarCookies) is False:
-        return False
-    if checkMenuExisted(snackBarOther) is False:
-        return False
-    if checkMenuExisted(snackBarDesserts) is False:
-        return False
+    print(dailyCarbs)
+    print(drinks)
+    print(saladBar)
+    print(pizzaBar)
+    print(snackBarPastries)
+    print(snackBarCookies)
+    print(snackBarOther)
 
-    if checkMenuExisted(snackBarPies) is False:
-        return False
-    if checkMenuExisted(snackBarMisc) is False:
-        return False
-    
-    
-    # serializer makes sure input data is changed to readable type
-    serializer = constMenuSerializer(data = { 
-    
-        "dailyCarbs" : dailyCarbs,
-        "drinks" : drinks,
-        "saladBar" : saladBar,
-        "pizzaBar" : pizzaBar,
-        "snackBarPastries" : snackBarPastries,
-        "snackBarCookies" : snackBarCookies,
-        "snackBarOther" : snackBarOther,
-        "snackBarDesserts" : snackBarDesserts,
-        "snackBarPies" : snackBarPies,
-        "snackBarMisc" : snackBarMisc,
-        
-        
-    }) 
+    try:
+        menu = constantMenu.objects.get()
+        return True
+    except:
+        # serializer makes sure input data is changed to readable type
+        serializer = constMenuSerializer(data = {
+            "dailyCarbs" : dailyCarbs,
+            "drinks" : drinks,
+            "saladBar" : saladBar,
+            "pizzaBar" : pizzaBar,
+            "snackBarPastries" : snackBarPastries,
+            "snackBarCookies" : snackBarCookies,
+            "snackBarOther" : snackBarOther,
+            "snackBarDesserts" : snackBarDesserts,
+            "snackBarPies" : snackBarPies,
+            "snackBarMisc" : snackBarMisc,
+        }) 
 
-    if serializer.is_valid():
-        serializer.save()
-
+        if serializer.is_valid():
+            serializer.save()
+            print("save successful")
 
 def crawler():
     options = webdriver.ChromeOptions()
@@ -313,8 +304,9 @@ def crawler():
             dailyCarbList[count].append(statStringList[x])
         
         dailyCarbs_id = saveDish(dailyCarbList[count][0], dailyCarbList[count][1], dailyCarbList[count][4], dailyCarbList[count][5], dailyCarbList[count][6], dailyCarbList[count][2], dailyCarbList[count][3], 0 )
-        if dailyCarbs_id is True:
-            dailyCarbs_id_array.append(dailyCarbs_id)
+        if dailyCarbs_id != False:
+            print("dailyC_id" + str(dailyCarbs_id))
+            dailyCarbs_id_array.append(dailyCarbList[count][0])
         
         count+=1
     
@@ -354,8 +346,8 @@ def crawler():
             drinksList[count].append(statStringList[x])
         
         drinks_id = saveDish(drinksList[count][0], drinksList[count][1], drinksList[count][4], drinksList[count][5], drinksList[count][6], drinksList[count][2], drinksList[count][3], 0 )
-        if drinks_id is True:
-            drinks_id_array.append(drinks_id)
+        if drinks_id != False:
+            drinks_id_array.append(drinksList[count][0])
         
         count+=1
     print(drinksList)
@@ -400,8 +392,8 @@ def crawler():
             saladBarList[count].append(statStringList[x])
         
         saladBar_id = saveDish(saladBarList[count][0], saladBarList[count][1], saladBarList[count][4], saladBarList[count][5], saladBarList[count][6], saladBarList[count][2], saladBarList[count][3], 0 )
-        if saladBar_id is True:
-            saladBar_id_array.append(saladBar_id)    
+        if saladBar_id != False:
+            saladBar_id_array.append(saladBarList[count][0])    
         
         count+=1
     print(saladBarList)
@@ -492,8 +484,8 @@ def crawler():
             pizzaBarList[count].append(statStringList[x])
         
         pizzaBar_id = saveDish(pizzaBarList[count][0], pizzaBarList[count][1], pizzaBarList[count][4], pizzaBarList[count][5], pizzaBarList[count][6], pizzaBarList[count][2], pizzaBarList[count][3], 0 )
-        if pizzaBar_id is True:
-            pizzaBar_id_array.append(pizzaBar_id)   
+        if pizzaBar_id != False:
+            pizzaBar_id_array.append(pizzaBarList[count][0])   
             
         
         count+=1
@@ -548,8 +540,8 @@ def crawler():
             snackPastriesList[count].append(statStringList[x])
         
         snackBarPastries_id = saveDish(snackPastriesList[count][0], snackPastriesList[count][1], snackPastriesList[count][4], snackPastriesList[count][5], snackPastriesList[count][6], snackPastriesList[count][2], snackPastriesList[count][3], 0 )
-        if snackBarPastries_id is True:
-            snackBarPastries_id_array.append(snackBarPastries_id)   
+        if snackBarPastries_id != False:
+            snackBarPastries_id_array.append(snackPastriesList[count][0])   
             
         
         count+=1
@@ -605,8 +597,8 @@ def crawler():
             snackCookiesList[count].append(statStringList[x])
         
         snackBarCookies_id = saveDish(snackCookiesList[count][0], snackCookiesList[count][1], snackCookiesList[count][4], snackCookiesList[count][5], snackCookiesList[count][6], snackCookiesList[count][2], snackCookiesList[count][3], 0 )
-        if snackBarCookies_id is True:
-            snackBarCookies_id_array.append(snackBarCookies_id)
+        if snackBarCookies_id != False:
+            snackBarCookies_id_array.append(snackCookiesList[count][0])
         
         count+=1
     print(snackCookiesList)
@@ -660,8 +652,8 @@ def crawler():
             otherHealthyList[count].append(statStringList[x])
         
         snackBarOther_id = saveDish(otherHealthyList[count][0], otherHealthyList[count][1], otherHealthyList[count][4], otherHealthyList[count][5], otherHealthyList[count][6], otherHealthyList[count][2], otherHealthyList[count][3], 0 )
-        if snackBarOther_id is True:
-            snackBarOther_id_array.append(snackBarOther_id)
+        if snackBarOther_id != False:
+            snackBarOther_id_array.append(otherHealthyList[count][0])
         
         count+=1
     print(otherHealthyList)
@@ -715,8 +707,8 @@ def crawler():
             snackDessertsList[count].append(statStringList[x])
         
         snackBarDesserts_id = saveDish(snackDessertsList[count][0], snackDessertsList[count][1], snackDessertsList[count][4], snackDessertsList[count][5], snackDessertsList[count][6], snackDessertsList[count][2], snackDessertsList[count][3], 0 )
-        if snackBarDesserts_id is True:
-            snackBarDesserts_id_array.append(snackBarDesserts_id)
+        if snackBarDesserts_id != False:
+            snackBarDesserts_id_array.append(snackDessertsList[count][0])
         
         count+=1
     print(snackDessertsList)
@@ -770,8 +762,8 @@ def crawler():
             snackPiesList[count].append(statStringList[x])
         
         snackBarPies_id = saveDish(snackPiesList[count][0], snackPiesList[count][1], snackPiesList[count][4], snackPiesList[count][5], snackPiesList[count][6], snackPiesList[count][2], snackPiesList[count][3], 0 )
-        if snackBarPies_id is True:
-            snackBarPies_id_array.append(snackBarPies_id)
+        if snackBarPies_id != False:
+            snackBarPies_id_array.append(snackPiesList[count][0])
         
         count+=1
     print(snackPiesList)
@@ -825,13 +817,14 @@ def crawler():
             snackMiscList[count].append(statStringList[x])
         
         snackBarMisc_id = saveDish(snackMiscList[count][0], snackMiscList[count][1], snackMiscList[count][4], snackMiscList[count][5], snackMiscList[count][6], snackMiscList[count][2], snackMiscList[count][3], 0 )
-        if snackBarMisc_id is True:
-            snackBarMisc_id_array.append(snackBarMisc_id)
+        print("snackBarMisc_id" + str(snackBarMisc_id))
+        if snackBarMisc_id != False:
+            snackBarMisc_id_array.append(snackMiscList[count][0])
         
         count+=1
     print(snackMiscList)
     print(); print();
-
+    
     saveConstMenu(dailyCarbs_id_array, drinks_id_array, saladBar_id_array, pizzaBar_id_array, snackBarPastries_id_array, snackBarCookies_id_array, snackBarOther_id_array, snackBarDesserts_id_array, snackBarPies_id_array, snackBarMisc_id_array)
 
 

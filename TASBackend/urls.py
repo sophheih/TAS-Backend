@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from apscheduler.schedulers.blocking import BlockingScheduler
-from crawler_api import crawler
-
+# from crawler_api import crawler
+from otherRest_api import crawler
 from apscheduler.triggers.combining import OrTrigger
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.interval import IntervalTrigger
@@ -34,7 +34,8 @@ sched = BlockingScheduler()
 
 def job():
     print("Start Crawling.....")
-    # crawler.crawler()
+
+    crawler.crawler()
 
 
 scheduler = BackgroundScheduler()
@@ -49,3 +50,4 @@ urlpatterns = [
     path('dailyMenu/', include('crawler_api.urls')),
     path('otherRest/', include('otherRest_api.urls'))
 ]
+

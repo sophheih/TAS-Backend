@@ -9,7 +9,7 @@ from TASBackend.models import data
 from mongoengine.errors import ValidationError
 from TASBackend.models import dish
 
-@json_view
+
 @api_view(['GET', 'POST'])
 def data(request, member_id, timestamp):
     if request.method == 'GET':
@@ -26,7 +26,7 @@ def getMemberNutrition(request, member_id, timestamp):
     try: 
         curMember = data.objects(_raw_ = member_filter)
     except data.DoesNotExist:
-        return JsonResponse(
+        return JsonResponse( 
             {'message': 'Member does not exist'},
             status = status.HTTP_404_NOT_FOUND
         )
@@ -57,7 +57,7 @@ def storeMemberNutrition(request, member_id, timestamp): # store nutrition based
     
     
     member_filter = {'member_id': member_id, 'timestamp': timestamp} 
-
+    
     try: 
         curMember = data.objects.gets(__raw__ = member_filter)
         curMember["Calories"] += cal

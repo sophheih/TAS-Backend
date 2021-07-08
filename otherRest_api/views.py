@@ -57,7 +57,7 @@ def get_Menu(request, restName):
     try:     
         restName = request.GET.get('restName', None)
         if restName is not None:
-            menus = constantMenu.objects.get(RestName = restName)
+            menus = constantMenu.objects.get()
         
         else:
             return JsonResponse(

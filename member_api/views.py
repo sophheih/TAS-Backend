@@ -94,7 +94,7 @@ def register(request):
 
 @api_view(['POST'])
 def login(request):
-    data = JSONParser().parse() #reads the file / converts, like dictionary
+    data = JSONParser().parse(request) #reads the file / converts, like dictionary
     account = data.get("account")
     password = data.get("password")
     

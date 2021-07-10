@@ -1,3 +1,5 @@
+appdirs==1.4.4
+APScheduler==3.7.0
 asgiref==3.2.10
 astroid==2.4.2
 autopep8==1.5.3
@@ -6,6 +8,7 @@ boto3==1.14.34
 botocore==1.17.34
 certifi==2020.6.20
 chardet==3.0.4
+distlib==0.3.2
 Django==3.0.8
 django-cors-headers==3.4.0
 django-rest-framework==0.1.0
@@ -13,6 +16,7 @@ django-rest-framework-mongoengine==3.4.1
 djangorestframework==3.11.0
 dnspython==2.0.0
 docutils==0.15.2
+filelock==3.0.12
 idna==2.5
 isort==4.3.21
 jmespath==0.10.0
@@ -21,7 +25,6 @@ mccabe==0.6.1
 mongoengine==0.20.0
 Naked==0.1.31
 pycodestyle==2.6.0
-#pycrypto==2.6.1
 PyJWT==1.7.1
 pylint==2.5.3
 pylint-django==2.2.0
@@ -34,10 +37,14 @@ pytz==2020.1
 PyYAML==5.3.1
 requests==2.24.0
 requests2==2.16.0
+s3transfer==0.3.7
+selenium==3.141.0
 shellescape==3.8.1
 six==1.15.0
 sqlparse==0.3.1
 toml==0.10.1
 typed-ast==1.4.1
-# urllib3==1.21.2
+tzlocal==2.1
+urllib3==1.21.1
+virtualenv==20.4.7
 wrapt==1.12.1

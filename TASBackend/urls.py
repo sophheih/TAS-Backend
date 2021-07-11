@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from TASBackend.views import get_system_status
 from apscheduler.schedulers.blocking import BlockingScheduler
 # from crawler_api import crawler
 from otherRest_api import crawler
@@ -44,6 +45,7 @@ sched = BlockingScheduler()
 # sched.start()
 # crawler.crawler()
 urlpatterns = [
+    path('', get_system_status),
     path('member/', include('member_api.urls')),
     path('dish/', include('dish_api.urls')),
     path('nutritioninfo/', include('data_api.urls')),
